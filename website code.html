@@ -6,7 +6,7 @@
     <title>Fun Bot</title>
     <style>
         body {
-            background-color: #1a1a1a;
+            background-color: #000;
             color: white;
             font-family: Arial, sans-serif;
             margin: 0;
@@ -33,6 +33,7 @@
 
         section {
             padding: 30px;
+            background-color: #121212;
         }
 
         .commands {
@@ -103,13 +104,14 @@
         }
 
         footer {
-            background-color: #1a1a1a;
+            background-color: #121212;
             color: white;
             padding: 15px;
             text-align: center;
             font-size: 1em;
         }
 
+        /* Sidebar for Support Uzi */
         .support-uzi {
             position: fixed;
             top: 10%;
@@ -144,6 +146,36 @@
 
         .support-uzi:hover {
             left: 0;
+        }
+
+        /* Game Section */
+        .game-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .game-container button {
+            background-color: #ff5555;
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .game-container button:hover {
+            background-color: #b50000;
+        }
+
+        .scoreboard {
+            font-size: 1.2em;
+            color: white;
+            margin-top: 20px;
         }
 
         /* Modal Styling */
@@ -187,6 +219,7 @@
         .close-btn:hover {
             background-color: #ff5555;
         }
+
     </style>
 </head>
 <body>
@@ -205,27 +238,27 @@
     <section>
         <h2>Available Commands</h2>
         <div class="commands">
-            <div class="command-item" onclick="showModal('.help')">
+            <div class="command-item">
                 <h3>.help</h3>
                 <p>Displays a list of all commands.</p>
                 <div class="tooltip">Shows help with all bot commands</div>
             </div>
-            <div class="command-item" onclick="showModal('.dmall')">
+            <div class="command-item">
                 <h3>.dmall <i>&lt;message&gt;</i></h3>
                 <p>Send a message to all members (excluding bots) in the server.</p>
                 <div class="tooltip">Send a DM to all members of the server</div>
             </div>
-            <div class="command-item" onclick="showModal('.createchannel')">
+            <div class="command-item">
                 <h3>.createchannel <i>&lt;channel_name&gt;</i></h3>
                 <p>Create a private text channel just for you!</p>
                 <div class="tooltip">Creates a private channel</div>
             </div>
-            <div class="command-item" onclick="showModal('.createvcchannel')">
+            <div class="command-item">
                 <h3>.createvcchannel <i>&lt;vc_channel_name&gt;</i></h3>
                 <p>Create a private voice channel just for you!</p>
                 <div class="tooltip">Creates a private voice channel</div>
             </div>
-            <div class="command-item" onclick="showModal('.giveadmin')">
+            <div class="command-item">
                 <h3>.giveadmin</h3>
                 <p>Gives the "Admin" role with all permissions to the user.</p>
                 <div class="tooltip">Grants admin role to a user</div>
@@ -235,6 +268,13 @@
         <div style="text-align: center; margin-top: 30px;">
             <a href="https://discord.com/oauth2/authorize?client_id=1306372358243618857&permissions=8&scope=bot+applications.commands" class="invite-button">Invite Fun Bot to Your Server</a>
         </div>
+
+        <!-- Game Section -->
+        <div class="game-container">
+            <h3>Can you click the button fast enough?</h3>
+            <button id="gameButton" onclick="startGame()">Start Game</button>
+            <div class="scoreboard" id="scoreboard"></div>
+        </div>
     </section>
 
     <footer>
@@ -242,15 +282,37 @@
     </footer>
 
     <!-- Modal -->
-    <div class="modal" id="command-modal">
+    <div id="command-modal" class="modal">
         <div class="modal-content">
-            <h2>Command Details</h2>
+            <h2>Command Information</h2>
             <p id="modal-description"></p>
             <button class="close-btn" onclick="closeModal()">Close</button>
         </div>
     </div>
 
     <script>
+        // Game variables
+        let gameStartTime;
+        let gameEndTime;
+        let score = 0;
+
+        function startGame() {
+            const button = document.getElementById('gameButton');
+            button.disabled = true;
+            score = 0;
+
+            // Start the game
+            gameStartTime = Date.now();
+            button.textContent = "Click me as fast as you can!";
+            setTimeout(() => {
+                gameEndTime = Date.now();
+                score = gameEndTime - gameStartTime;
+                document.getElementById('scoreboard').textContent = `Your time: ${score} milliseconds`;
+                button.textContent = "Try Again!";
+                button.disabled = false;
+            }, 3000);  // End game after 3 seconds
+        }
+
         // Show modal with command details
         function showModal(command) {
             const descriptions = {
@@ -270,24 +332,7 @@
         function closeModal() {
             document.getElementById('command-modal').style.display = 'none';
         }
-
-        // Toggle Dark Mode
-        let darkMode = true;
-        function toggleDarkMode() {
-            document.body.style.backgroundColor = darkMode ? '#fff' : '#1a1a1a';
-            document.body.style.color = darkMode ? '#000' : '#fff';
-            darkMode = !darkMode;
-        }
-
-        // Command item hover animations
-        document.querySelectorAll('.command-item').forEach(item => {
-            item.addEventListener('mouseover', () => {
-                item.style.transform = 'scale(1.05)';
-            });
-            item.addEventListener('mouseout', () => {
-                item.style.transform = 'scale(1)';
-            });
-        });
     </script>
+
 </body>
 </html>
