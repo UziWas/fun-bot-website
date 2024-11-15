@@ -12,6 +12,7 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         header {
@@ -21,6 +22,12 @@
             text-align: center;
             font-size: 2.5em;
             font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         section {
@@ -31,6 +38,7 @@
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
+            margin-top: 20px;
         }
 
         .command-item {
@@ -40,10 +48,12 @@
             width: 250px;
             margin: 15px;
             text-align: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
         .command-item:hover {
             background-color: #c90a0a;
+            transform: scale(1.1);
             cursor: pointer;
         }
 
@@ -60,10 +70,12 @@
             font-size: 1.2em;
             cursor: pointer;
             text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .invite-button:hover {
             background-color: #b50000;
+            transform: scale(1.1);
         }
 
         footer {
@@ -74,26 +86,45 @@
             font-size: 1em;
         }
 
+        /* Sidebar for Uzi's love section */
         .support-uzi {
+            position: fixed;
+            top: 10%;
+            left: 0;
             background-color: #8b0000;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
+            padding: 10px;
+            width: 200px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.2em;
+            color: white;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            transition: left 0.3s ease;
         }
 
         .support-uzi h2 {
-            font-size: 2em;
+            font-size: 1.5em;
             color: #ffb3b3;
+            margin: 0;
         }
 
         .support-uzi p {
-            font-size: 1.2em;
-            color: white;
+            font-size: 1em;
+            margin: 5px 0;
         }
 
         .support-uzi .heart {
-            font-size: 2.5em;
+            font-size: 1.5em;
             color: #ff0000;
+        }
+
+        .support-uzi:hover {
+            left: -250px;
+        }
+
+        .command-item.active {
+            border: 2px solid #ff5555;
         }
     </style>
 </head>
@@ -103,26 +134,33 @@
         Fun Bot - The Ultimate Discord Bot
     </header>
 
+    <!-- Sidebar for Support Uzi -->
+    <div class="support-uzi">
+        <h2>Support Uzi</h2>
+        <p>Fun Bot and the website were created by Uzi.</p>
+        <p>❤️</p>
+    </div>
+
     <section>
         <h2>Available Commands</h2>
         <div class="commands">
-            <div class="command-item">
+            <div class="command-item" onclick="highlightCommand(this)">
                 <h3>.help</h3>
                 <p>Displays a list of all commands.</p>
             </div>
-            <div class="command-item">
+            <div class="command-item" onclick="highlightCommand(this)">
                 <h3>.dmall <i>&lt;message&gt;</i></h3>
                 <p>Send a message to all members (excluding bots) in the server.</p>
             </div>
-            <div class="command-item">
+            <div class="command-item" onclick="highlightCommand(this)">
                 <h3>.createchannel <i>&lt;channel_name&gt;</i></h3>
                 <p>Create a private text channel just for you!</p>
             </div>
-            <div class="command-item">
+            <div class="command-item" onclick="highlightCommand(this)">
                 <h3>.createvcchannel <i>&lt;vc_channel_name&gt;</i></h3>
                 <p>Create a private voice channel just for you!</p>
             </div>
-            <div class="command-item">
+            <div class="command-item" onclick="highlightCommand(this)">
                 <h3>.giveadmin</h3>
                 <p>Gives the "Admin" role with all permissions to the user.</p>
             </div>
@@ -133,17 +171,28 @@
         </div>
     </section>
 
-    <div class="support-uzi">
-        <h2>Why We Support Uzi</h2>
-        <p>Fun Bot is a creation by **Uzi**, who has single-handedly developed this bot and the website. Uzi's hard work and dedication have resulted in a fully functional bot that is designed to enhance your server experience with various powerful commands. By supporting Uzi, you're helping to maintain and improve this project for future versions.</p>
-        <p>Uzi created this bot with the goal of providing an easy-to-use and feature-rich Discord bot for all server administrators. The website and the bot are both crafted with care to ensure you have the best experience possible.</p>
-        <p>Support Uzi, the creator, and help improve Fun Bot! ❤️</p>
-        <div class="heart">❤️</div>
-    </div>
-
     <footer>
         Made with ❤️ by Uzi.
     </footer>
 
+    <script>
+        // Function to highlight the command item when clicked
+        function highlightCommand(element) {
+            // Remove the 'active' class from all command items
+            const items = document.querySelectorAll('.command-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            // Add the 'active' class to the clicked command item
+            element.classList.add('active');
+        }
+
+        // Toggle sidebar visibility when hovering over Uzi's section
+        document.querySelector('.support-uzi').addEventListener('mouseenter', () => {
+            document.querySelector('.support-uzi').style.left = '0';
+        });
+        document.querySelector('.support-uzi').addEventListener('mouseleave', () => {
+            document.querySelector('.support-uzi').style.left = '-250px';
+        });
+    </script>
 </body>
 </html>
