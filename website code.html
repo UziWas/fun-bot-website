@@ -13,6 +13,7 @@
             padding: 0;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         header {
@@ -44,21 +45,44 @@
         .command-item {
             background-color: #3e3e3e;
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             width: 250px;
             margin: 15px;
             text-align: center;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
 
         .command-item:hover {
             background-color: #c90a0a;
-            transform: scale(1.1);
+            transform: scale(1.05);
             cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
 
         .command-item h3 {
             font-size: 1.5em;
+        }
+
+        .command-item .tooltip {
+            display: none;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .command-item:hover .tooltip {
+            display: block;
+            opacity: 1;
         }
 
         .invite-button {
@@ -86,11 +110,10 @@
             font-size: 1em;
         }
 
-        /* Sidebar for Uzi's love section */
         .support-uzi {
             position: fixed;
             top: 10%;
-            left: 0;
+            left: -250px;
             background-color: #8b0000;
             padding: 10px;
             width: 200px;
@@ -120,11 +143,49 @@
         }
 
         .support-uzi:hover {
-            left: -250px;
+            left: 0;
         }
 
-        .command-item.active {
-            border: 2px solid #ff5555;
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            color: white;
+            max-width: 500px;
+            width: 80%;
+        }
+
+        .modal h2 {
+            font-size: 1.8em;
+        }
+
+        .close-btn {
+            background-color: #b50000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            float: right;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #ff5555;
         }
     </style>
 </head>
@@ -144,25 +205,30 @@
     <section>
         <h2>Available Commands</h2>
         <div class="commands">
-            <div class="command-item" onclick="highlightCommand(this)">
+            <div class="command-item" onclick="showModal('.help')">
                 <h3>.help</h3>
                 <p>Displays a list of all commands.</p>
+                <div class="tooltip">Shows help with all bot commands</div>
             </div>
-            <div class="command-item" onclick="highlightCommand(this)">
+            <div class="command-item" onclick="showModal('.dmall')">
                 <h3>.dmall <i>&lt;message&gt;</i></h3>
                 <p>Send a message to all members (excluding bots) in the server.</p>
+                <div class="tooltip">Send a DM to all members of the server</div>
             </div>
-            <div class="command-item" onclick="highlightCommand(this)">
+            <div class="command-item" onclick="showModal('.createchannel')">
                 <h3>.createchannel <i>&lt;channel_name&gt;</i></h3>
                 <p>Create a private text channel just for you!</p>
+                <div class="tooltip">Creates a private channel</div>
             </div>
-            <div class="command-item" onclick="highlightCommand(this)">
+            <div class="command-item" onclick="showModal('.createvcchannel')">
                 <h3>.createvcchannel <i>&lt;vc_channel_name&gt;</i></h3>
                 <p>Create a private voice channel just for you!</p>
+                <div class="tooltip">Creates a private voice channel</div>
             </div>
-            <div class="command-item" onclick="highlightCommand(this)">
+            <div class="command-item" onclick="showModal('.giveadmin')">
                 <h3>.giveadmin</h3>
                 <p>Gives the "Admin" role with all permissions to the user.</p>
+                <div class="tooltip">Grants admin role to a user</div>
             </div>
         </div>
 
@@ -175,23 +241,52 @@
         Made with ❤️ by Uzi.
     </footer>
 
-    <script>
-        // Function to highlight the command item when clicked
-        function highlightCommand(element) {
-            // Remove the 'active' class from all command items
-            const items = document.querySelectorAll('.command-item');
-            items.forEach(item => item.classList.remove('active'));
+    <!-- Modal -->
+    <div class="modal" id="command-modal">
+        <div class="modal-content">
+            <h2>Command Details</h2>
+            <p id="modal-description"></p>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
 
-            // Add the 'active' class to the clicked command item
-            element.classList.add('active');
+    <script>
+        // Show modal with command details
+        function showModal(command) {
+            const descriptions = {
+                '.help': 'Shows all available commands for Fun Bot.',
+                '.dmall': 'Send a direct message to all members in the server.',
+                '.createchannel': 'Creates a private text channel just for you.',
+                '.createvcchannel': 'Creates a private voice channel just for you.',
+                '.giveadmin': 'Gives the "Admin" role to the user.'
+            };
+            const modal = document.getElementById('command-modal');
+            const modalDescription = document.getElementById('modal-description');
+            modal.style.display = 'flex';
+            modalDescription.textContent = descriptions[command];
         }
 
-        // Toggle sidebar visibility when hovering over Uzi's section
-        document.querySelector('.support-uzi').addEventListener('mouseenter', () => {
-            document.querySelector('.support-uzi').style.left = '0';
-        });
-        document.querySelector('.support-uzi').addEventListener('mouseleave', () => {
-            document.querySelector('.support-uzi').style.left = '-250px';
+        // Close modal
+        function closeModal() {
+            document.getElementById('command-modal').style.display = 'none';
+        }
+
+        // Toggle Dark Mode
+        let darkMode = true;
+        function toggleDarkMode() {
+            document.body.style.backgroundColor = darkMode ? '#fff' : '#1a1a1a';
+            document.body.style.color = darkMode ? '#000' : '#fff';
+            darkMode = !darkMode;
+        }
+
+        // Command item hover animations
+        document.querySelectorAll('.command-item').forEach(item => {
+            item.addEventListener('mouseover', () => {
+                item.style.transform = 'scale(1.05)';
+            });
+            item.addEventListener('mouseout', () => {
+                item.style.transform = 'scale(1)';
+            });
         });
     </script>
 </body>
