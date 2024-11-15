@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fun Bot - Command Center</title>
+  <style>
+    /* General reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212; /* Very dark background */
+      color: #fff; /* White text for contrast */
+      padding: 0;
+      margin: 0;
+      transition: background-color 0.3s ease;
+    }
+
+    header {
+      background: linear-gradient(to right, #8B0000, #600000); /* Dark red gradient */
+      color: white;
+      padding: 40px;
+      text-align: center;
+      border-bottom: 4px solid #2c3e50;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      border-radius: 0 0 20px 20px;
+    }
+
+    header h1 {
+      font-size: 3.5em;
+      margin-bottom: 15px;
+      letter-spacing: 1.5px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    header p {
+      font-size: 1.3em;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #1a1a1a; /* Darker background for the main container */
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.8em;
+      color: #e74c3c; /* Dark red */
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .command-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .command-item {
+      background-color: #333; /* Darker background for commands */
+      margin: 15px 0;
+      padding: 25px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border-left: 5px solid #e74c3c; /* Red border */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .command-item:hover {
+      transform: scale(1.05);
+      background-color: #444;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    .command-item h3 {
+      color: #fff;
+      font-size: 1.6em;
+    }
+
+    .command-item p {
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: #b0b0b0;
+    }
+
+    .invite-btn {
+      display: inline-block;
+      text-align: center;
+      background-color: #8B0000; /* Dark red */
+      color: white;
+      padding: 18px 35px;
+      border-radius: 30px;
+      font-size: 1.3em;
+      text-decoration: none;
+      margin: 30px auto;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .invite-btn:hover {
+      background-color: #600000; /* Darker red on hover */
+      transform: translateY(-5px);
+    }
+
+    footer {
+      background-color: #2c2c2c; /* Dark footer */
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    footer p {
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+
+    footer span {
+      color: #e74c3c; /* Dark red for the heart emoji */
+    }
+
+    .emoji {
+      font-size: 1.8em;
+    }
+
+    .support-section {
+      background-color: #333;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 50px;
+    }
+
+    .support-section h3 {
+      font-size: 2.5em;
+      color: #e74c3c;
+      margin-bottom: 25px;
+      text-align: center;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    .support-section p {
+      font-size: 1.3em;
+      color: #b0b0b0;
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Welcome to Fun Bot!</h1>
+  <p>Your personal assistant with powerful commands!</p>
+</header>
+
+<div class="container">
+  <h2>Fun Bot Commands</h2>
+
+  <ul class="command-list">
+    <!-- .giveadmin command -->
+    <li class="command-item">
+      <h3>.giveadmin</h3>
+      <p>Gives you the "Admin" role with all permissions to manage the server. Perfect for server admins!</p>
+    </li>
+
+    <!-- .dmall command -->
+    <li class="command-item">
+      <h3>.dmall &lt;message&gt;</h3>
+      <p>Send a custom direct message to all members in the server, excluding bots. Use this to keep everyone in the loop!</p>
+    </li>
+
+    <!-- .createchannel command -->
+    <li class="command-item">
+      <h3>.createchannel &lt;channel_name&gt;</h3>
+      <p>Create a new private text channel that only you can access. Ideal for private discussions or events.</p>
+    </li>
+
+    <!-- .createvcchannel command -->
+    <li class="command-item">
+      <h3>.createvcchannel &lt;vc_channel_name&gt;</h3>
+      <p>Create a new private voice channel that only you can access. Host private voice chats with friends or colleagues.</p>
+    </li>
+  </ul>
+
+  <p style="text-align: center; margin-top: 20px;">
+    <a href="https://discord.com/oauth2/authorize?client_id=1306372358243618857&permissions=8&integration_type=0&scope=bot+applications.commands" class="invite-btn" target="_blank">Invite Fun Bot to Your Server</a>
+  </p>
+</div>
+
+<!-- Why We Support Uzi Section -->
+<div class="support-section">
+  <h3>Why We Support Uzi</h3>
+  <p>
+    Uzi is the brilliant mind behind Fun Bot and its development. He created the entire bot from scratch, working tirelessly to bring it to life and provide a seamless experience for all users. Not only has Uzi developed this powerful bot, but he also designed and built this website entirely by himself. His dedication, technical skills, and passion for delivering high-quality, user-friendly solutions are what set him apart.
+  </p>
+  <p>
+    Uzi’s commitment to improving the bot, adding new features, and constantly refining the user experience is something worth celebrating. Fun Bot wouldn't exist without his expertise and vision. Supporting Uzi means supporting a developer who is determined to make a positive impact and offer valuable tools to the community.
+  </p>
+</div>
+
+<footer>
+  <p>Made with <span class="emoji">❤️</span> by Uzi</p>
+</footer>
+
+</body>
+</html>
