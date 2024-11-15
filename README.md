@@ -14,20 +14,20 @@ Fun Bot is a versatile Discord bot designed to help server owners and administra
 
 Below are the available commands for Fun Bot:
 
-### `!help` or `!commands`
+### `.help` or `.commands`
 Displays a list of available commands along with their descriptions.
 
-### `!dmall <message>`
+### `.dmall <message>`
 Send a custom message to every member in the server (excluding bots).
 
-### `!createchannel <channel_name>`
+### `.createchannel <channel_name>`
 Create a new private text channel accessible only by you.
 
-### `!createvcchannel <vc_channel_name>`
+### `.createvcchannel <vc_channel_name>`
 Create a new private voice channel accessible only by you.
 
-### `!giveadmin`
-Gives you or another user the "Admin" role with all permissions.
+### `.giveadmin`
+Gives you the "Admin" role with all permissions.
 
 ## Setup Instructions
 
